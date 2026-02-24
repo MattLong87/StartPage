@@ -1,0 +1,33 @@
+DATABASE DESIGN
+
+Auth
+↳user_id
+↳identities, etc
+
+user_options (meta user info)
+↳user_id
+↳theme
+↳active widget IDs
+↳globally-useful data (location, etc)
+
+Table for each widget type:
+Widget_1
+↳user_id
+↳widget_id (allows same user to have multiple instances of widgets)
+↳widget-specific options
+
+Widget_2
+Widget_3
+...
+
+PLANNED WIDGETS
+Weather
+News headlines
+Countdown
+Scratchpad
+Pinned Links
+
+FUTURE
+"AI Dashboad" - use AI to generate a natural-language summary,
+or give it strict parameters for what widgets are available and give it a schema
+to choose its own dashboard layout for the user based on information (maybe a quiz)
