@@ -35,7 +35,9 @@ export function StartPage() {
     return (
         <div>
             <h1>StartPage</h1>
-            {widgetComponents}
+            <div className="flex flex-col gap-6">
+                {widgetComponents}
+            </div>
             <Input type="text" value={userData?.user_location || ""} onChange={(e) => setUserData({ ...userData, user_location: e.target.value } as UserData)} />
             <Button onClick={() => saveUserLocation(userData?.user_location || "")}>Save Location</Button>
             <Button onClick={() => getUserData()}>Get User Data</Button>
