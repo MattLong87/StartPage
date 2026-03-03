@@ -121,3 +121,52 @@ export async function addWidget(
     throw new Error(updateOptionsError.message);
   }
 }
+
+export async function updateWidget(widgetName: string, widgetId: string, widgetOptions: Record<string, unknown>) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    redirect("/auth/login");
+  }
+
+  const { error } = await supabase
+    .from(widgetName)
+    .update({ widget_options: widgetOptions })
+    .eq("user_id", user.id)
+    .eq("widget_id", widgetId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function loadWidget(widgetName: string, widgetId: string) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    redirect("/auth/login");
+  }
+
+  const { data, error } = await supabase
+    .from(widgetName)
+    .select("widget_options")
+    .eq("user_id", user.id)
+    .eq("widget_id", widgetId)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return JSON.parse(data?.widget_options) ?? null;
+}
